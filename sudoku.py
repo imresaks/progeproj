@@ -141,9 +141,9 @@ def reeglikontroll(nr, grid, rida, veerg):
     alarida = rida//3
     alaveerg = veerg//3
     count = 0
-    for i in range(len(grid[alarida*3:alarida*3+2])):
-        for j in range(len(grid[alarida*3:alarida*3+2][i][alaveerg*3:alarida*3+2])):
-            if grid[alarida*3:alarida*3+2][i][alaveerg*3:alarida*3+2][j] == nr:
+    for i in range(len(grid[alarida*3:alarida*3+3])):
+        for j in range(len(grid[alarida*3:alarida*3+3][i][alaveerg*3:alarida*3+3])):
+            if grid[alarida*3:alarida*3+3][i][alaveerg*3:alarida*3+3][j] == nr:
                 count += 1
     if count >= 2:
         return False
