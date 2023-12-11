@@ -117,8 +117,8 @@ lahendada = eemalda_numbreid(segatud, raskusastmed[raskus])
 print("")
 
 
-#for i in range(len(lahendada)):
-    #print(lahendada[i])
+for i in range(len(lahendada)):
+    print(lahendada[i])
 
 
 def reeglikontroll(nr, grid, rida, veerg):
