@@ -14,7 +14,7 @@ def main():
     # ruudustiku loomine
     ruudustik=[[0 for i in range(ruudustiku_suurus)] for j in range(ruudustiku_suurus)]
 
-    # täidab random numbritega
+    # täidab random numbritega63525
     for i in range(ruudustiku_suurus):
         for j in range(ruudustiku_suurus):
             ruudustik[i][j] = int(random.randint(1, 9))
