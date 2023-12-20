@@ -208,24 +208,71 @@ def joonista_valitud_ruut(valitud_ruut):
 
 kell = pygame.time.Clock()
 valitud_ruut = None
+sisend = 0
+def kirjuta_tühja(valitud_ruut, sisend):
+    if sisend != 0:
+        sudoku_laud[valitud_ruut[0]][valitud_ruut[1]] = sisend
+        print(sudoku_laud)
+        sisend = 0
 
 while True:
+    vajutus = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             hiireX, hiireY = pygame.mouse.get_pos()
             valitud_ruut = (hiireY // RUUDU_SUURUS, hiireX // RUUDU_SUURUS)
             print(valitud_ruut)
+        if event.type == pygame.KEYDOWN:
+            #if event.key == pygame.K_0 or pygame.K_KP0:
+                #sisend = 0
+            if event.key == pygame.K_1:
+                vajutus = True
+                sisend = 1
+                print('Vajutati 1')
+            elif event.key == pygame.K_2:
+                vajutus = True
+                sisend = 2
+                print('Vajutati 2')
+            elif event.key == pygame.K_3:
+                vajutus = True
+                sisend = 3
+                print('Vajutati 3')
+            elif event.key == pygame.K_4:
+                vajutus = True
+                sisend = 4
+                print('Vajutati 4')
+            elif event.key == pygame.K_5:
+                vajutus = True
+                sisend = 5
+                print('Vajutati 5')
+            elif event.key == pygame.K_6:
+                vajutus = True
+                sisend = 6
+                print('Vajutati 6')
+            elif event.key == pygame.K_7:
+                vajutus = True
+                sisend = 7
+                print('Vajutati 7')
+            elif event.key == pygame.K_8:
+                vajutus = True
+                sisend = 8
+                print('Vajutati 8')
+            elif event.key == pygame.K_9:
+                vajutus = True
+                sisend = 9
+                print('Vajutati 9')
 
     ekraan.fill(VALGE)
     joonista_ruudustik()
     joonista_arvud()
     joonista_3ruudu_suurus()
-
     if valitud_ruut:
         joonista_valitud_ruut(valitud_ruut)
+        if vajutus == True:
+            kirjuta_tühja(valitud_ruut, sisend)
 
     pygame.display.flip()
     kell.tick(60)
