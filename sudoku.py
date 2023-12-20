@@ -186,7 +186,7 @@ def joonista_3ruudu_suurus():
 
 
 def joonista_arvud():
-    font2 = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
+    font2 = pygame.font.SysFont('vinerhanditc', 38, bold=False, italic=False)
     for i in range(9):
         for j in range(9):
             if sudoku_laud[i][j] != 0 and kasutaja_laud[i][j] != 0: #algselt laual olnud numbrid
@@ -195,7 +195,7 @@ def joonista_arvud():
                 y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
                 ekraan.blit(arv, (x, y))
             elif sudoku_laud[i][j] == 0 and kasutaja_laud[i][j] != 0: #kasutaja sisend
-                arv = font2.render(str(kasutaja_laud[i][j]), True, SININE)
+                arv = font2.render(str(kasutaja_laud[i][j]), True, color_dark)
                 x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
                 y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
                 ekraan.blit(arv, (x, y))
