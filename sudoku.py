@@ -1,6 +1,8 @@
 import random as rnd
 import pygame
 import sys
+import copy
+
 def create_small():
     grid = []
     
@@ -136,6 +138,7 @@ for i in range(len(lahendada)):
     sudoku_laud.append(lahendada[i])
 #usr_laud = sudoku_laud.copy()
 
+kasutaja_laud = copy.deepcopy(sudoku_laud)
 
 def reeglikontroll(nr, grid, rida, veerg):
     
@@ -166,18 +169,6 @@ def reeglikontroll(nr, grid, rida, veerg):
 
     return True
 
-ruudustik = [[3, 5, 6, 1, 7, 9, 2, 8, 4],
-[1, 7, 9, 8, 4, 2, 6, 3, 5],
-[8, 4, 2, 3, 5, 6, 9, 1, 7],
-[4, 9, 1, 5, 2, 8, 3, 7, 6],
-[7, 6, 3, 4, 9, 1, 8, 5, 2],
-[5, 2, 8, 7, 6, 3, 1, 4, 9],
-[9, 3, 7, 2, 1, 4, 5, 6, 8],
-[6, 8, 5, 9, 3, 7, 4, 2, 1],
-[2, 1, 4, 6, 8, 5, 7, 9, 3]]
-
-#print(reeglikontroll(3, ruudustik, 0 ,0))
-print(sudoku_laud)
 
 # PyGame-i osa
 
@@ -188,7 +179,7 @@ RUUDU_SUURUS = LAIUS // 9
 
 VALGE = (255, 255, 255)
 MUST = (0, 0, 0)
-SININE = (67, 92, 124)
+SININE = (43, 140, 200)
 LILLA_PUNANE = (153, 1, 71)
 
 # init
@@ -211,15 +202,17 @@ def joonista_arvud():
     font2 = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
     for i in range(9):
         for j in range(9):
-            if sudoku_laud[i][j] != 0:
-                arv = font.render(str(sudoku_laud[i][j]), True, MUST)
+            if sudoku_laud[i][j] != 0 and kasutaja_laud[i][j] != 0:
+                arv = font.render(str(kasutaja_laud[i][j]), True, MUST)
                 x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
                 y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
                 ekraan.blit(arv, (x, y))
-            if usr_laud[i][j] != 'x':
-                arv = font2.render(str(usr_laud[i][j]), True, MUST)
+            elif sudoku_laud[i][j] == 0 and kasutaja_laud[i][j] != 0:
+                arv = font.render(str(kasutaja_laud[i][j]), True, SININE)
                 x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
                 y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
+                ekraan.blit(arv, (x, y))
+
     #if valitud_ruut:
         #if vajutus == True:
             #kirjuta_tühja(valitud_ruut, sisend)
@@ -237,7 +230,7 @@ def kirjuta_tühja(valitud_ruut, sisend):
         j = valitud_ruut[1]
         #font = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
         #if usr_laud[i][j]:
-        usr_laud[i][j] = sisend
+        kasutaja_laud[i][j] = sisend
             #arv = font.render(str(sisend), True, MUST)
             #x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
             #y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
@@ -301,8 +294,9 @@ while True:
     joonista_3ruudu_suurus()
     if valitud_ruut:
         joonista_valitud_ruut(valitud_ruut)
-        if vajutus == True:
+        if vajutus:
             kirjuta_tühja(valitud_ruut, sisend)
 
     pygame.display.flip()
-    kell.tick(60)
+    kell.tick(3)
+
