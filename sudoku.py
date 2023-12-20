@@ -3,6 +3,7 @@ import pygame
 import sys
 import copy
 
+
 def create_small():
     grid = []
     
@@ -39,8 +40,7 @@ def laienda_alla(ruut):
     return ruut
 
 
-
-def sega_ridu(sisend):
+def sega_ridu(sisend): #segab lauda
     uus = []
     järjekord = list(range(3))
     rnd.shuffle(järjekord)
@@ -65,7 +65,7 @@ def counter(pea, alam):
     return lugeja
 
 
-def sega_tulbad(sisend= 0):
+def sega_tulbad(sisend= 0): #segab lauda
     tulem =[]
 
     for i in range(9):
@@ -85,13 +85,7 @@ def sega_tulbad(sisend= 0):
     return tulem
 
 
-raskusastmed = {"lihtne": 24,
-                "keskmine": 21,
-                "raske": 18
-                }
-
-
-def eemalda_numbreid(lahendus, jätta):
+def eemalda_numbreid(lahendus, jätta): #eemaldab laualt numbreid, et mängu saaks ka mängida
 
     read_jätmiseks = []
     for i in range(jätta):
@@ -106,41 +100,7 @@ def eemalda_numbreid(lahendus, jätta):
     return lahendus
 
 
-#valmistab ette põhi-mängulaua(mis on reeglitele vastav) ning mida hakatakse pärast segama, et saada päris-mängulaud
-alaruut = laienda_alla(laienda_ruut(create_small()))
-segatud = sega_ridu(sega_tulbad(alaruut))
-
-#for i in range(len(segatud)):
-   # print(segatud[i])
-
-
-raskus = "lihtne"   
-lahendada = eemalda_numbreid(segatud, raskusastmed[raskus])
-
-print("")
-
-sudoku_laud = []
-usr_laud = [
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
-]
-
-
-for i in range(len(lahendada)):
-    #print(lahendada[i])
-    sudoku_laud.append(lahendada[i])
-#usr_laud = sudoku_laud.copy()
-
-kasutaja_laud = copy.deepcopy(sudoku_laud)
-
-def reeglikontroll(nr, grid, rida, veerg):
+def reeglikontroll(nr, grid, rida, veerg): #kontrollib kas käesolev number on reeglitega vastavuses
     
     if nr == 0:
         return True
@@ -160,8 +120,8 @@ def reeglikontroll(nr, grid, rida, veerg):
             return False
     
     #leiame alaruudu, kus nr on
-    alarida = rida//3
-    alaveerg = veerg//3
+    alarida = rida//3 
+    alaveerg = veerg//3 
     count = 0
     for i in range(len(grid[alarida*3:alarida*3+3])):
         for j in range(len(grid[alarida*3:alarida*3+3][i][alaveerg*3:alarida*3+3])):
@@ -177,6 +137,8 @@ def reeglikontroll(nr, grid, rida, veerg):
 
 pygame.init()
 
+#paneb paika vajaminevad muutujad 
+
 LAIUS, KÕRGUS = 540, 540
 RUUDU_SUURUS = LAIUS // 9
 
@@ -186,6 +148,11 @@ SININE = (43, 140, 200)
 LILLA_PUNANE = (153, 1, 71)
 HELEPUNANE = (253, 137, 137)
 
+HELEROHELINE = (140,245,140)
+ROHELINE = (32,230,32)
+PUNANE = (230,32,32)
+KOLLANE = (240,240,40)
+HELEKOLLANE = (230,230,126)
 
 
 font = pygame.font.SysFont('bahnschrift', 36, bold=False, italic=False)
@@ -193,12 +160,14 @@ tekst1 = font.render("Menüü", True, MUST)
 tekst2 = font.render("Start", True, MUST)
 tekst3 = font.render("Quit", True, MUST)
 
+tekst4 = font.render("Easy", True, MUST)
+tekst5 = font.render("Medium", True, MUST)
+tekst6 = font.render("Hard", True, MUST) 
 
 color_light = (170, 170, 170)
 color_dark = (100, 100, 100)
 
-
-# init
+#init
 ekraan = pygame.display.set_mode((LAIUS, KÕRGUS))
 pygame.display.set_caption("Sudoku pela in HINDI2025 GTA7LEAK")
 
@@ -208,10 +177,12 @@ def joonista_ruudustik():
         pygame.draw.line(ekraan, MUST, (0, i * RUUDU_SUURUS), (LAIUS, i * RUUDU_SUURUS), 2)
         pygame.draw.line(ekraan, MUST, (i * RUUDU_SUURUS, 0), (i * RUUDU_SUURUS, KÕRGUS), 2)
 
+
 def joonista_3ruudu_suurus():
     for i in range(0, 10, 3):
         pygame.draw.line(ekraan, SININE, (0, i * RUUDU_SUURUS), (LAIUS, i * RUUDU_SUURUS), 3)
         pygame.draw.line(ekraan, SININE, (i * RUUDU_SUURUS, 0), (i * RUUDU_SUURUS, KÕRGUS), 3)
+
 
 def joonista_arvud():
     font2 = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
@@ -228,34 +199,52 @@ def joonista_arvud():
                 y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
                 ekraan.blit(arv, (x, y))
 
-    #if valitud_ruut:
-        #if vajutus == True:
-            #kirjuta_tühja(valitud_ruut, sisend)
 
 def joonista_valitud_ruut(valitud_ruut):
     i, j = valitud_ruut
     pygame.draw.rect(ekraan, LILLA_PUNANE, (j * RUUDU_SUURUS, i * RUUDU_SUURUS, RUUDU_SUURUS, RUUDU_SUURUS), 3)
 
+
 def kirjuta_tühja(valitud_ruut, sisend):
     if sisend != -1:
         i = valitud_ruut[0]
         j = valitud_ruut[1]
-        #font = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
-        #if usr_laud[i][j]:
+
         if sudoku_laud[i][j] == 0:
             kasutaja_laud[i][j] = sisend
-            #arv = font.render(str(sisend), True, MUST)
-            #x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
-            #y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
-            #ekraan.blit(arv, (x, y))
-        #print(usr_laud)
+
         sisend = -1
-#ekraan.fill(VALGE)
 
 
+def kas_võit(laud):
+    for i in range(len(laud)):
+        for j in range(len(laud[i])):
+            if laud[i][j] == 0:
+                return False
+            
+    return True
 
-def main():
+
+raskusastmed = {"Lihtne": 35,
+                "Keskmine": 21,
+                "Raske": 18
+                }
+
+def main(raskusaste):
+    global sudoku_laud
+    sudoku_laud = []
+
+    #valmistab ette põhi-mängulaua(mis on reeglitele vastav) ning mida hakatakse pärast segama, et saada päris-mängulaud
+    alaruut = laienda_alla(laienda_ruut(create_small()))
+    segatud = sega_ridu(sega_tulbad(alaruut))
+    lahendada = eemalda_numbreid(segatud, raskusastmed[raskusaste])
     
+    for i in range(len(lahendada)):
+        #print(lahendada[i])
+        sudoku_laud.append(lahendada[i])
+    global kasutaja_laud
+    kasutaja_laud = copy.deepcopy(sudoku_laud)
+
     elusid = 3
     
     vead = []
@@ -263,8 +252,22 @@ def main():
     valitud_ruut = None
     sisend = -1
     while True:
-        if elusid == 0:
-            pygame.quit()
+        if elusid == 0: #elud otsas siis saab mäng läbi
+            ekraan.fill(VALGE)
+            kaotus = font.render("KAOTASID", True, MUST)
+            ekraan.blit(kaotus, (200, 260))
+            pygame.display.flip()
+            pygame.time.wait(2000)
+            meny()
+
+        if kas_võit(kasutaja_laud):
+            ekraan.fill(VALGE)
+            võit = font.render("VÕITSID", True, MUST)
+            ekraan.blit(võit, (200, 260))
+            pygame.display.flip()
+            pygame.time.wait(2000)
+            meny()
+
         vajutus = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -274,9 +277,7 @@ def main():
                 hiireX, hiireY = pygame.mouse.get_pos()
                 valitud_ruut = (hiireY // RUUDU_SUURUS, hiireX // RUUDU_SUURUS)
                 print(valitud_ruut)
-            if event.type == pygame.KEYDOWN:
-                #if event.key == pygame.K_0 or pygame.K_KP0:
-                    #sisend = 0
+            if event.type == pygame.KEYDOWN: #mis klahvi vajutati
                 if event.key == pygame.K_1:
                     vajutus = True
                     sisend = 1
@@ -319,8 +320,10 @@ def main():
 
         ekraan.fill(VALGE)
         
-        for i in range(len(vead)):
+        for i in range(len(vead)): #kui on vigane koht siis joonistub see välja
             pygame.draw.rect(ekraan, HELEPUNANE, (vead[i][1]*RUUDU_SUURUS,vead[i][0]*RUUDU_SUURUS,RUUDU_SUURUS,RUUDU_SUURUS))
+
+        # kuvab kõik ekraanile
 
         joonista_ruudustik()
         joonista_arvud()
@@ -329,12 +332,14 @@ def main():
             joonista_valitud_ruut(valitud_ruut)
             if vajutus:
                 kirjuta_tühja(valitud_ruut, sisend)
-                if not reeglikontroll(kasutaja_laud[valitud_ruut[0]][valitud_ruut[1]],kasutaja_laud, valitud_ruut[0], valitud_ruut[1]):
+                if not reeglikontroll(kasutaja_laud[valitud_ruut[0]][valitud_ruut[1]],kasutaja_laud, valitud_ruut[0], valitud_ruut[1]): #vaatab kas sisestatud number vastab reeglitele
                     vead.append((valitud_ruut[0],valitud_ruut[1]))
                     elusid -=1
                 else:
-                    vead.remove((valitud_ruut[0],valitud_ruut[1]))
-
+                    try:
+                        vead.remove((valitud_ruut[0],valitud_ruut[1]))
+                    except:
+                        pass
                 if (valitud_ruut[0], valitud_ruut[1]) in vead and kasutaja_laud[valitud_ruut[0]][valitud_ruut[1]] == 0:
                     vead.remove((valitud_ruut[0],valitud_ruut[1]))
                     
@@ -354,11 +359,13 @@ def meny():             # genereerib menüü, kui mängu käima paned
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if LAIUS/2 - 40 <= mouse[0] <= LAIUS/2 + 40 and KÕRGUS/2 - 15 <= mouse[1] <= KÕRGUS/2 + 15:
-                    main()
+                    vali_raskusaste()
                 elif 230 <= mouse[0] <= 315 and 305 <= mouse[1] <= 340:
                     pygame.quit()
+                    sys.exit()
 
         # muudab värvi kui hiir "start" nupu peal
         if 230 <= mouse[0] <= 315 and 255 <= mouse[1] <= 291:
@@ -379,6 +386,49 @@ def meny():             # genereerib menüü, kui mängu käima paned
 
         pygame.display.update()
 
+
+def vali_raskusaste():             # saab valida raskusastet
+    kell1 = pygame.time.Clock()
+    while True:
+        kell1.tick(60)
+        mouse = pygame.mouse.get_pos()
+
+        ekraan.fill((255, 255, 255))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if 200 <= mouse[0] <= 340 and 196 <= mouse[1] <= 242:
+                    main("Lihtne")
+                elif 200 <= mouse[0] <= 340 and 247 <= mouse[1] <= 293:
+                    main("Keskmine")
+                elif 200 <= mouse[0] <= 340 and 298 <= mouse[1] <= 341:
+                    main("Raske")
+
+        if 200 <= mouse[0] <= 340 and 196 <= mouse[1] <= 242:
+            pygame.draw.rect(ekraan, ROHELINE, [200, 196, 140, 46], 23, 3)
+        else:
+            pygame.draw.rect(ekraan, HELEROHELINE, [200, 196, 140, 46], 23, 3)
+
+        if 200 <= mouse[0] <= 340 and 247 <= mouse[1] <= 293:
+            pygame.draw.rect(ekraan, KOLLANE, [200, 247, 140, 46], 23, 3)
+        else:
+            pygame.draw.rect(ekraan, HELEKOLLANE, [200, 247, 140, 46], 23, 3)
+
+        if 200 <= mouse[0] <= 340 and 298 <= mouse[1] <= 341:
+            pygame.draw.rect(ekraan, PUNANE, [200, 298, 140, 46], 23, 3)
+        else:
+            pygame.draw.rect(ekraan, HELEPUNANE, [200, 298, 140, 46], 23, 3)
+
+
+        # joonistab tekstid 
+        ekraan.blit(tekst4, (230, 202))
+        ekraan.blit(tekst5, (207, 252))
+        ekraan.blit(tekst6, (230, 303))
+
+        pygame.display.update()
 
 
 meny()
