@@ -173,7 +173,6 @@ pygame.display.set_caption("Sudoku pela")
 taustakas = pygame.image.load('sudoku.jpg')
 kaotuspic = pygame.image.load('nutab.gif')
 
-
 def joonista_ruudustik():
     for i in range(10):
         pygame.draw.line(ekraan, MUST, (0, i * RUUDU_SUURUS), (LAIUS, i * RUUDU_SUURUS), 2)
