@@ -169,8 +169,9 @@ color_dark = (100, 100, 100)
 
 #init
 ekraan = pygame.display.set_mode((LAIUS, KÕRGUS))
-pygame.display.set_caption("Sudoku pela in HINDI2025 GTA7LEAK")
-
+pygame.display.set_caption("Sudoku pela")
+taustakas = pygame.image.load('sudoku.jpg')
+kaotuspic = pygame.image.load('nutab.gif')
 
 def joonista_ruudustik():
     for i in range(10):
@@ -254,6 +255,7 @@ def main(raskusaste):
     while True:
         if elusid == 0: #elud otsas siis saab mäng läbi
             ekraan.fill(VALGE)
+            ekraan.blit(kaotuspic, (0, 0))
             kaotus = font.render("KAOTASID", True, MUST)
             ekraan.blit(kaotus, (200, 260))
             pygame.display.flip()
@@ -355,7 +357,7 @@ def meny():             # genereerib menüü, kui mängu käima paned
         mouse = pygame.mouse.get_pos()
 
         ekraan.fill((255, 255, 255))
-
+        ekraan.blit(taustakas, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
