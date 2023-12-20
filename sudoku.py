@@ -208,6 +208,7 @@ def joonista_3ruudu_suurus():
 
 def joonista_arvud():
     font = pygame.font.SysFont('bahnschrift', 36, bold=False, italic=False)
+    font2 = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
     for i in range(9):
         for j in range(9):
             if sudoku_laud[i][j] != 0:
@@ -215,9 +216,13 @@ def joonista_arvud():
                 x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
                 y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
                 ekraan.blit(arv, (x, y))
-    if valitud_ruut:
-        if vajutus == True:
-            kirjuta_tühja(valitud_ruut, sisend)
+            if usr_laud[i][j] != 'x':
+                arv = font2.render(str(usr_laud[i][j]), True, MUST)
+                x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
+                y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
+    #if valitud_ruut:
+        #if vajutus == True:
+            #kirjuta_tühja(valitud_ruut, sisend)
 
 def joonista_valitud_ruut(valitud_ruut):
     i, j = valitud_ruut
@@ -230,16 +235,16 @@ def kirjuta_tühja(valitud_ruut, sisend):
     if sisend != 0:
         i = valitud_ruut[0]
         j = valitud_ruut[1]
-        font = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
-        if usr_laud[i][j]:
-            usr_laud[i][j] = sisend
-            arv = font.render(str(sisend), True, MUST)
-            x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
-            y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
-            ekraan.blit(arv, (x, y))
+        #font = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
+        #if usr_laud[i][j]:
+        usr_laud[i][j] = sisend
+            #arv = font.render(str(sisend), True, MUST)
+            #x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
+            #y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
+            #ekraan.blit(arv, (x, y))
         #print(usr_laud)
         sisend = 0
-
+#ekraan.fill(VALGE)
 while True:
     vajutus = False
     for event in pygame.event.get():
@@ -296,8 +301,8 @@ while True:
     joonista_3ruudu_suurus()
     if valitud_ruut:
         joonista_valitud_ruut(valitud_ruut)
-        #if vajutus == True:
-            #kirjuta_tühja(valitud_ruut, sisend)
+        if vajutus == True:
+            kirjuta_tühja(valitud_ruut, sisend)
 
     pygame.display.flip()
     kell.tick(60)
