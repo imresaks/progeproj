@@ -118,9 +118,22 @@ lahendada = eemalda_numbreid(segatud, raskusastmed[raskus])
 print("")
 
 sudoku_laud = []
+usr_laud = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
+
 for i in range(len(lahendada)):
     #print(lahendada[i])
     sudoku_laud.append(lahendada[i])
+#usr_laud = sudoku_laud.copy()
 
 
 def reeglikontroll(nr, grid, rida, veerg):
@@ -211,8 +224,16 @@ valitud_ruut = None
 sisend = 0
 def kirjuta_tühja(valitud_ruut, sisend):
     if sisend != 0:
-        sudoku_laud[valitud_ruut[0]][valitud_ruut[1]] = sisend
-        print(sudoku_laud)
+        i = valitud_ruut[0]
+        j = valitud_ruut[1]
+        font = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
+        if usr_laud[i][j] == 0:
+            usr_laud[i][j] = sisend
+            arv = font.render(str(sisend), True, MUST)
+            x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
+            y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
+            ekraan.blit(arv, (x, y))
+        print(usr_laud)
         sisend = 0
 
 while True:
