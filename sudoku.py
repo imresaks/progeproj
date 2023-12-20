@@ -123,9 +123,9 @@ def reeglikontroll(nr, grid, rida, veerg): #kontrollib kas käesolev number on r
     alarida = rida//3 
     alaveerg = veerg//3 
     count = 0
-    for i in range(len(grid[alarida*3:alarida*3+3])):
-        for j in range(len(grid[alarida*3:alarida*3+3][i][alaveerg*3:alarida*3+3])):
-            if grid[alarida*3:alarida*3+3][i][alaveerg*3:alarida*3+3][j] == nr:
+    for i in range(alarida*3,alarida*3+3):
+        for j in range(alaveerg*3,alaveerg*3+3):
+            if grid[i][j] == nr:
                 count += 1
     if count >= 2:
         return False
@@ -169,7 +169,9 @@ color_dark = (100, 100, 100)
 
 #init
 ekraan = pygame.display.set_mode((LAIUS, KÕRGUS))
-pygame.display.set_caption("Sudoku pela in HINDI2025 GTA7LEAK")
+pygame.display.set_caption("Sudoku pela")
+taustakas = pygame.image.load('sudoku.jpg')
+kaotuspic = pygame.image.load('nutab.gif')
 
 
 def joonista_ruudustik():
@@ -188,13 +190,13 @@ def joonista_arvud():
     font2 = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
     for i in range(9):
         for j in range(9):
-            if sudoku_laud[i][j] != 0 and kasutaja_laud[i][j] != 0:
+            if sudoku_laud[i][j] != 0 and kasutaja_laud[i][j] != 0: #algselt laual olnud numbrid
                 arv = font.render(str(kasutaja_laud[i][j]), True, MUST)
                 x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
                 y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
                 ekraan.blit(arv, (x, y))
-            elif sudoku_laud[i][j] == 0 and kasutaja_laud[i][j] != 0:
-                arv = font.render(str(kasutaja_laud[i][j]), True, SININE)
+            elif sudoku_laud[i][j] == 0 and kasutaja_laud[i][j] != 0: #kasutaja sisend
+                arv = font2.render(str(kasutaja_laud[i][j]), True, SININE)
                 x = j * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_width() // 2
                 y = i * RUUDU_SUURUS + RUUDU_SUURUS // 2 - arv.get_height() // 2
                 ekraan.blit(arv, (x, y))
@@ -225,7 +227,7 @@ def kas_võit(laud):
     return True
 
 
-raskusastmed = {"Lihtne": 35,
+raskusastmed = {"Lihtne": 24,
                 "Keskmine": 21,
                 "Raske": 18
                 }
@@ -254,6 +256,7 @@ def main(raskusaste):
     while True:
         if elusid == 0: #elud otsas siis saab mäng läbi
             ekraan.fill(VALGE)
+            ekraan.blit(kaotuspic, (0, 0))
             kaotus = font.render("KAOTASID", True, MUST)
             ekraan.blit(kaotus, (200, 260))
             pygame.display.flip()
@@ -347,7 +350,6 @@ def main(raskusaste):
         kell.tick(60)
 
 
-
 def meny():             # genereerib menüü, kui mängu käima paned
     kell1 = pygame.time.Clock()
     while True:
@@ -355,7 +357,7 @@ def meny():             # genereerib menüü, kui mängu käima paned
         mouse = pygame.mouse.get_pos()
 
         ekraan.fill((255, 255, 255))
-
+        ekraan.blit(taustakas, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -431,4 +433,5 @@ def vali_raskusaste():             # saab valida raskusastet
         pygame.display.update()
 
 
-meny()
+if __name__ == "__main__":
+    meny()
