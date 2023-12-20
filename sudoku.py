@@ -188,10 +188,10 @@ HELEPUNANE = (253, 137, 137)
 
 
 
-font3 = pygame.font.Font("freesansbold.ttf", 32)
-tekst1 = font3.render("Menüü", True, MUST)
-tekst2 = font3.render("Start", True, MUST)
-tekst3 = font3.render("Quit", True, MUST)
+font = pygame.font.SysFont('bahnschrift', 36, bold=False, italic=False)
+tekst1 = font.render("Menüü", True, MUST)
+tekst2 = font.render("Start", True, MUST)
+tekst3 = font.render("Quit", True, MUST)
 
 
 color_light = (170, 170, 170)
@@ -214,7 +214,6 @@ def joonista_3ruudu_suurus():
         pygame.draw.line(ekraan, SININE, (i * RUUDU_SUURUS, 0), (i * RUUDU_SUURUS, KÕRGUS), 3)
 
 def joonista_arvud():
-    font = pygame.font.SysFont('bahnschrift', 36, bold=False, italic=False)
     font2 = pygame.font.SysFont('blackadderitc', 38, bold=False, italic=False)
     for i in range(9):
         for j in range(9):
@@ -264,6 +263,8 @@ def main():
     valitud_ruut = None
     sisend = -1
     while True:
+        if elusid == 0:
+            pygame.quit()
         vajutus = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -331,7 +332,9 @@ def main():
                 if not reeglikontroll(kasutaja_laud[valitud_ruut[0]][valitud_ruut[1]],kasutaja_laud, valitud_ruut[0], valitud_ruut[1]):
                     vead.append((valitud_ruut[0],valitud_ruut[1]))
                     elusid -=1
-                print(vead)
+                else:
+                    vead.remove((valitud_ruut[0],valitud_ruut[1]))
+
                 if (valitud_ruut[0], valitud_ruut[1]) in vead and kasutaja_laud[valitud_ruut[0]][valitud_ruut[1]] == 0:
                     vead.remove((valitud_ruut[0],valitud_ruut[1]))
                     
@@ -354,29 +357,28 @@ def meny():             # genereerib menüü, kui mängu käima paned
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if LAIUS/2 - 40 <= mouse[0] <= LAIUS/2 + 40 and KÕRGUS/2 - 15 <= mouse[1] <= KÕRGUS/2 + 15:
                     main()
-                elif 410 <= mouse[0] <= 490 and 335 <= mouse[1] <= 365:
+                elif 230 <= mouse[0] <= 315 and 305 <= mouse[1] <= 340:
                     pygame.quit()
 
-        # muudab värvi kui hiir "start nupu peal
-        if 405 <= mouse[0] <= 490 and 282 <= mouse[1] <= 317:
-            pygame.draw.rect(ekraan, color_light, [405, 282, 85, 36], 18, 3)
+        # muudab värvi kui hiir "start" nupu peal
+        if 230 <= mouse[0] <= 315 and 255 <= mouse[1] <= 291:
+            pygame.draw.rect(ekraan, color_light, [230, 255, 85, 36], 18, 3)
         else:
-            pygame.draw.rect(ekraan, color_dark, [405, 282, 85, 36], 18, 3)
+            pygame.draw.rect(ekraan, color_dark, [230, 255, 85, 36], 18, 3)
 
         # muudab värvi kui hiir "quit" nupu peal
-        if 405 <= mouse[0] <= 490 and 332 <= mouse[1] <= 367:
-            pygame.draw.rect(ekraan, color_light, [405, 332, 85, 36], 18, 3)
+        if 230 <= mouse[0] <= 315  and 305 <= mouse[1] <= 341:
+            pygame.draw.rect(ekraan, color_light, [230, 305, 85, 36], 18, 3)
         else:
-            pygame.draw.rect(ekraan, color_dark, [405, 332, 85, 36], 18, 3)
+            pygame.draw.rect(ekraan, color_dark, [230, 305, 85, 36], 18, 3)
 
         # joonistab tekstid menüüle
         ekraan.blit(tekst1, (10, 10))
-        ekraan.blit(tekst2, (410, 285))
-        ekraan.blit(tekst3, (412, 335))
+        ekraan.blit(tekst2, (233, 258))
+        ekraan.blit(tekst3, (239, 308))
 
         pygame.display.update()
 
 
 
-# meny()
-main()
+meny()
